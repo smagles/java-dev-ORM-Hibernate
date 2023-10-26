@@ -8,7 +8,7 @@ INSERT INTO client (name) VALUES
 ('Nebula'),
 ('Mantis'),
 ('Taserface'),
-('Thanos');
+('Ronan the Accuser');
 
 INSERT INTO planet (id, name) VALUES
   ('NOW', 'Knowhere'),

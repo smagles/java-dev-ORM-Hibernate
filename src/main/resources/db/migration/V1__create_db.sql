@@ -1,5 +1,5 @@
 CREATE TABLE client (
-    id INT AUTO_INCREMENT PRIMARY KEY,
+    id LONG AUTO_INCREMENT PRIMARY KEY,
     name VARCHAR(200) NOT NULL
 );
 
@@ -8,9 +8,9 @@ CREATE TABLE planet (
     name VARCHAR(500) NOT NULL
 );
 CREATE TABLE ticket (
-    id INT AUTO_INCREMENT PRIMARY KEY,
+    id LONG AUTO_INCREMENT PRIMARY KEY,
     created_at TIMESTAMP,
-    client_id INT,
+    client_id LONG,
     from_planet_id VARCHAR(50),
     to_planet_id VARCHAR(50),
     FOREIGN KEY (client_id) REFERENCES client (id),
