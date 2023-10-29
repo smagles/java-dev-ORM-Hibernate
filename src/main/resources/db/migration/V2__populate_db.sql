@@ -1,4 +1,4 @@
-INSERT INTO client (name) VALUES
+INSERT INTO clients (name) VALUES
 ('Star-Lord'),
 ('Gamora'),
 ('Drax the Destroyer'),
@@ -10,14 +10,14 @@ INSERT INTO client (name) VALUES
 ('Taserface'),
 ('Ronan the Accuser');
 
-INSERT INTO planet (id, name) VALUES
+INSERT INTO planets (id, name) VALUES
   ('NOW', 'Knowhere'),
   ('XN72', 'Xandar'),
   ('BK9', 'Berhert'),
   ('SVD7', 'Sovereign'),
   ('CTXX', 'Contraxia');
 
-INSERT INTO ticket (created_at, client_id, from_planet_id, to_planet_id) VALUES
+INSERT INTO tickets (created_at, client_id, from_planet_id, to_planet_id) VALUES
    ('2023-10-23 12:00:00', 1, 'NOW', 'XN72'),
    ('2023-10-23 12:15:00', 2, 'BK9', 'SVD7'),
    ('2023-10-23 12:30:00', 3, 'CTXX', 'BK9'),

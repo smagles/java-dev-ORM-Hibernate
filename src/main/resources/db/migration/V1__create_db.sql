@@ -1,13 +1,13 @@
-CREATE TABLE client (
+CREATE TABLE clients (
     id LONG AUTO_INCREMENT PRIMARY KEY,
     name VARCHAR(200) NOT NULL
 );
 
-CREATE TABLE planet (
+CREATE TABLE planets (
     id VARCHAR(50) PRIMARY KEY,
     name VARCHAR(500) NOT NULL
 );
-CREATE TABLE ticket (
+CREATE TABLE tickets (
     id LONG AUTO_INCREMENT PRIMARY KEY,
     created_at TIMESTAMP,
     client_id LONG,
