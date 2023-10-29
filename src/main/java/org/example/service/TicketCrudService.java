@@ -3,6 +3,7 @@ package org.example.service;
 import jakarta.persistence.criteria.CriteriaQuery;
 import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.persistence.criteria.Root;
+import lombok.extern.log4j.Log4j;
 import org.example.entity.Ticket;
 import org.example.util.HibernateUtil;
 import org.hibernate.Session;
@@ -10,8 +11,10 @@ import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.hibernate.query.Query;
 
+import java.util.Collections;
 import java.util.List;
 
+@Log4j
 public class TicketCrudService implements CrudService<Ticket> {
 
     private final SessionFactory sessionFactory =
@@ -26,13 +29,18 @@ public class TicketCrudService implements CrudService<Ticket> {
             Transaction transaction = session.beginTransaction();
             session.persist(ticket);
             transaction.commit();
+            log.info("Ticket created: " + ticket.getId());
         }
     }
 
     @Override
     public Ticket getById(Object id) {
         try (Session session = sessionFactory.openSession()) {
-            return session.get(Ticket.class, id);
+            Ticket ticket = session.get(Ticket.class, id);
+            if (ticket == null) {
+                log.warn("Ticket with id " + id + " not found");
+            }
+            return ticket;
         }
     }
 
@@ -46,7 +54,11 @@ public class TicketCrudService implements CrudService<Ticket> {
 
             Query<Ticket> query = session.createQuery(criteria);
             return query.getResultList();
+        } catch (Exception e) {
+            log.error("Error while getting all tickets", e);
+            return Collections.emptyList();
         }
+
     }
 
     @Override
@@ -55,6 +67,9 @@ public class TicketCrudService implements CrudService<Ticket> {
             Transaction transaction = session.beginTransaction();
             session.merge(ticket);
             transaction.commit();
+            log.info("Ticket updated: " + ticket.getId());
+        } catch (Exception e) {
+            log.error("Error updating ticket: " + e.getMessage());
         }
     }
 
@@ -64,6 +79,9 @@ public class TicketCrudService implements CrudService<Ticket> {
             Transaction transaction = session.beginTransaction();
             session.remove(ticket);
             transaction.commit();
+            log.info("Ticket deleted: " + ticket.getId());
+        } catch (Exception e) {
+            log.error("Error deleting ticket: " + e.getMessage());
         }
     }
 }

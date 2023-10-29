@@ -3,6 +3,7 @@ package org.example.service;
 import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.persistence.criteria.CriteriaQuery;
 import jakarta.persistence.criteria.Root;
+import lombok.extern.log4j.Log4j;
 import org.example.entity.Planet;
 import org.example.util.HibernateUtil;
 import org.hibernate.Session;
@@ -13,7 +14,7 @@ import org.hibernate.query.Query;
 import java.util.Collections;
 import java.util.List;
 
-
+@Log4j
 public class PlanetCrudService implements CrudService<Planet> {
     private final SessionFactory sessionFactory =
             HibernateUtil.getInstance().getSessionFactory();
@@ -24,13 +25,20 @@ public class PlanetCrudService implements CrudService<Planet> {
             Transaction transaction = session.beginTransaction();
             session.persist(planet);
             transaction.commit();
+            log.info("Planet created: " + planet.getName());
+        } catch (Exception e) {
+            log.error("Error creating planet: " + e.getMessage());
         }
     }
 
     @Override
     public Planet getById(Object id) {
         try (Session session = sessionFactory.openSession()) {
-            return session.get(Planet.class, id);
+            Planet planet = session.get(Planet.class, id);
+            if (planet == null) {
+                log.warn("Planet with id " + id + " not found");
+            }
+            return planet;
         }
     }
 
@@ -46,7 +54,7 @@ public class PlanetCrudService implements CrudService<Planet> {
             Query<Planet> query = session.createQuery(criteria);
             return query.getResultList();
         } catch (Exception e) {
-            e.printStackTrace();
+            log.error("Error while getting all planets", e);
             return Collections.emptyList();
         }
     }
@@ -57,6 +65,9 @@ public class PlanetCrudService implements CrudService<Planet> {
             Transaction transaction = session.beginTransaction();
             session.merge(planet);
             transaction.commit();
+            log.info("Planet updated: " + planet.getName());
+        } catch (Exception e) {
+            log.error("Error updating planet: " + e.getMessage());
         }
     }
 
@@ -66,6 +77,9 @@ public class PlanetCrudService implements CrudService<Planet> {
             Transaction transaction = session.beginTransaction();
             session.remove(planet);
             transaction.commit();
+            log.info("Planet deleted: " + planet.getName());
+        } catch (Exception e) {
+            log.error("Error deleting planet: " + e.getMessage());
         }
     }
 }
