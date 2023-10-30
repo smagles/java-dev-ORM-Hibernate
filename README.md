@@ -1,3 +1,6 @@
+## Space Travel 🚀
+The project includes components like Hibernate for database interaction, Flyway for database migrations, H2 Database for development and testing, Project Lombok for code generation, and Log4j for logging and event tracking.
+
 ## Programming Language
 
 - ![Java 19](https://img.shields.io/badge/Java-19-red) 
