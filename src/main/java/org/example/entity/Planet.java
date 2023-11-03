@@ -9,7 +9,7 @@ import lombok.Data;
 
 @Entity
 @Data
-@Table(name = "planets")
+@Table(name = "Planets")
 public class Planet {
     @Id
     @Column(name = "id", length = 50, unique = true, nullable = false)
