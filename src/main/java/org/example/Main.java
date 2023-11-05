@@ -1,6 +1,5 @@
 package org.example;
 
-
 import org.example.entity.Client;
 import org.example.entity.Planet;
 import org.example.entity.Ticket;
@@ -20,23 +19,28 @@ public class Main {
         Client newClient = new Client();
         newClient.setName("Thanos");
         clientCrudService.create(newClient);
-        clientCrudService.delete(newClient);
 
         PlanetCrudService planetCrudService = new PlanetCrudService();
-        Planet newPlanet = new Planet();
-        newPlanet.setId("TITAN");
-        newPlanet.setName("Titan");
-        planetCrudService.create(newPlanet);
-        planetCrudService.delete(newPlanet);
+        Planet planetTitan = new Planet();
+        planetTitan.setId("TITAN");
+        planetTitan.setName("Titan");
+        planetCrudService.create(planetTitan);
+
+        Planet planetGarden = new Planet();
+        planetGarden.setId("0259-S");
+        planetGarden.setName("Garden");
+        planetCrudService.create(planetGarden);
 
         TicketCrudService ticketCrudService = new TicketCrudService();
         Ticket newTicket = new Ticket();
         Date currentDate = new Date();
         newTicket.setCreatedAt(currentDate);
-        newTicket.setClient(null);
-        newTicket.setFromPlanet(null);
-        newTicket.setToPlanet(null);
+        newTicket.setClient(newClient);
+        newTicket.setFromPlanet(planetTitan);
+        newTicket.setToPlanet(planetGarden);
         ticketCrudService.create(newTicket);
+
+
 
     }
 }
